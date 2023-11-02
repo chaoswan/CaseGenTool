@@ -8,14 +8,13 @@
     <name>CaseGenTool</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="wazwanchao@gmail.com" url="https://www.yourcompany.com">chaos</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    For goland, assist in generating unit test cases.
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.
@@ -25,6 +24,21 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-
     </extensions>
+    <actions>
+        <group id="CaseGenTool.ProjectViewPopupMenu" text="单测用例生成" description="单元测试用例生成工具" popup="true">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <action id="cgt.GenPreAction" class="com.spin.cgt.action.GenPreAction" text="初始化目录"/>
+            <action id="cgt.GenCaseAction" class="com.spin.cgt.action.GenCaseAction" text="生成用例"/>
+            <action id="cgt.ReGenCaseAction" class="com.spin.cgt.action.ReGenCaseAction" text="重新生成用例"/>
+            <action id="cgt.RunCaseAction" class="com.spin.cgt.action.RunCaseAction" text="运行用例"/>
+            <action id="cgt.PreStartupAction" class="com.spin.cgt.action.PreStartupAction" text="预启动服务"
+                    description="启动服务，后续生成及执行用例时，无需再启动"/>
+        </group>
+        <group id="CaseGenTool.EditorPopupMenu" text="单测用例生成" description="单元测试用例生成工具" popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <action id="cgt.GenCaseAction" class="com.spin.cgt.action.GenCaseAction" text="生成用例"/>
+            <action id="cgt.RunFuncAction" class="com.spin.cgt.action.RunFuncAction" text="执行函数"/>
+        </group>
+    </actions>
 </idea-plugin>
