@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.eclipse.jgit.lib.ObjectChecker.type
+
 plugins {
   id("java")
   id("org.jetbrains.kotlin.jvm") version "1.8.21"
@@ -14,10 +16,14 @@ repositories {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-  version.set("2022.2.5")
+  version.set("2022.2.1")
   type.set("GO") // Target IDE Platform
 
-  plugins.set(listOf(/* Plugin Dependencies */))
+  plugins.set(listOf("go"))
+}
+
+dependencies {
+  implementation("com.google.code.gson:gson:2.9.1")
 }
 
 tasks {

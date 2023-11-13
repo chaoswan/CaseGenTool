@@ -18,27 +18,27 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
-public class GenCaseAction extends AnAction {
+public class RunMethodAction extends AnAction {
 
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
         return ActionUpdateThread.BGT;
     }
 
-    public GenCaseAction() {
+    public RunMethodAction() {
         super();
     }
 
-    public GenCaseAction(@Nullable String text, @Nullable String description, @Nullable Icon icon) {
+    public RunMethodAction(@Nullable String text, @Nullable String description, @Nullable Icon icon) {
         super(text, description, icon);
     }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        MethodDialogTool.showDialog("生成用例", MethodModelTool.getDefaultModel(e), model -> genCase(e, model));
+        MethodDialogTool.showDialog("运行方法", MethodModelTool.getDefaultModel(e), model -> runMethod(e, model));
     }
 
-    public void genCase(AnActionEvent e, GenModel model) {
+    public void runMethod(AnActionEvent e, GenModel model) {
         StringBuilder emptyFields = new StringBuilder();
         if (model.region == null || model.region.isEmpty()) {
             emptyFields.append("地区").append(",");
@@ -51,12 +51,6 @@ public class GenCaseAction extends AnAction {
         }
         if (model.method == null || model.method.isEmpty()) {
             emptyFields.append("方法路径").append(",");
-        }
-        if (model.suffix == null || model.suffix.isEmpty()) {
-            emptyFields.append("用例名后缀").append(",");
-        }
-        if (model.dir == null || model.dir.isEmpty()) {
-            emptyFields.append("用例存放目录").append(",");
         }
         if (model.request[0] == null || model.request[0].isEmpty()) {
             emptyFields.append("请求参数").append(",");
@@ -73,20 +67,19 @@ public class GenCaseAction extends AnAction {
         if (!model.dir.startsWith("/")) {//相对路径补充全
             model.dir = FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR + model.dir;
         }
-
-        Cmd<GenModel> genModelCmd = new Cmd<>(Constant.CMD_TYPE_GEN_CASE, model);
+        Cmd<GenModel> genModelCmd = new Cmd<>(Constant.CMD_TYPE_RUN_METHOD, model);
         if (CmdClient.checkServer(FileTool.getProject(e).getName()) == 0) {
             CmdResult<String> cmdResult = new CmdResult<>("");
-            CmdClient.Cmd(new Cmd<>(Constant.CMD_TYPE_GEN_CASE, model), cmdResult);
+            CmdClient.Cmd(genModelCmd, cmdResult);
             if (cmdResult.isSuccess()) {
                 String data = cmdResult.getData();
                 if (data.isEmpty()) {
-                    Messages.showInfoMessage("生成成功", "生成成功");
+                    Messages.showInfoMessage("执行成功", "执行成功");
                 } else {
-                    Messages.showErrorDialog(data, "生成失败");
+                    Messages.showErrorDialog(data, "执行失败");
                 }
             } else {
-                Messages.showErrorDialog("生成失败", "生成失败");
+                Messages.showErrorDialog("执行失败", "执行失败");
             }
         } else {
             GotestRunTool.runGoTest(e, "TestCmd", genModelCmd);
