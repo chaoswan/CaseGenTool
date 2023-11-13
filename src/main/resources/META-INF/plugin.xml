@@ -8,7 +8,7 @@
     <name>CaseGenTool</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="wazwanchao@gmail.com" url="https://www.yourcompany.com">chaos</vendor>
+    <vendor email="wazwanchao@gmail.com" url="https://github.com/chaoswan/CaseGenToolm">chaoswan</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
@@ -20,25 +20,42 @@
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.go</depends>
+    <depends>org.jetbrains.plugins.go</depends>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
     </extensions>
     <actions>
-        <group id="CaseGenTool.ProjectViewPopupMenu" text="单测用例生成" description="单元测试用例生成工具" popup="true">
+        <group id="CaseGenTool.ProjectViewPopupMenu" text="单测用例生成" description="单元测试用例生成工具"
+               popup="true">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
-            <action id="cgt.GenPreAction" class="com.spin.cgt.action.GenPreAction" text="初始化目录"/>
             <action id="cgt.GenCaseAction" class="com.spin.cgt.action.GenCaseAction" text="生成用例"/>
-            <action id="cgt.ReGenCaseAction" class="com.spin.cgt.action.ReGenCaseAction" text="重新生成用例"/>
-            <action id="cgt.RunCaseAction" class="com.spin.cgt.action.RunCaseAction" text="运行用例"/>
+            <action id="cgt.ReGenCaseAction" class="com.spin.cgt.action.ReGenCaseAction" text="重新生成用例"
+                    description="选中文件或目录，重新生成用例"/>
+            <action id="cgt.RunCaseAction" class="com.spin.cgt.action.RunCaseAction" text="运行用例"
+                    description="选中文件或目录，执行选中的用例"/>
+<!--            <action id="cgt.RunMethodAction" class="com.spin.cgt.action.RunMethodAction" text="运行方法"-->
+<!--                    description="仅运行方法，不生成用例"/>-->
+            <action id="cgt.GenPreAction" class="com.spin.cgt.action.GenPreAction" text="初始化目录"
+                    description="初始化工具目录"/>
             <action id="cgt.PreStartupAction" class="com.spin.cgt.action.PreStartupAction" text="预启动服务"
-                    description="启动服务，后续生成及执行用例时，无需再启动"/>
+                    description="启动服务，提高后续生成及执行用例速度"/>
+            <action id="cgt.StopAction" class="com.spin.cgt.action.StopAction" text="停止服务"
+                    description="停止服务，将展示所有单测执行结果"/>
         </group>
         <group id="CaseGenTool.EditorPopupMenu" text="单测用例生成" description="单元测试用例生成工具" popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-            <action id="cgt.GenCaseAction" class="com.spin.cgt.action.GenCaseAction" text="生成用例"/>
-            <action id="cgt.RunFuncAction" class="com.spin.cgt.action.RunFuncAction" text="执行函数"/>
+            <action id="cgt.GenCaseActionOnEditor" class="com.spin.cgt.action.GenCaseAction" text="生成用例"/>
+<!--            <action id="cgt.RunMethodActionOnEditor" class="com.spin.cgt.action.RunMethodAction" text="运行方法"-->
+<!--                    description="仅运行方法，不生成用例"/>-->
+            <action id="cgt.GenPreActionOnEditor" class="com.spin.cgt.action.GenPreAction" text="初始化目录"
+                    description="初始化工具目录"/>
+            <action id="cgt.PreStartupActionOnEditor" class="com.spin.cgt.action.PreStartupAction" text="预启动服务"
+                    description="启动服务，提高后续生成及执行用例速度"/>
+            <action id="cgt.StopActionOnEditor" class="com.spin.cgt.action.StopAction" text="停止服务"
+                    description="停止服务，将展示所有单测执行结果"/>
         </group>
     </actions>
 </idea-plugin>
