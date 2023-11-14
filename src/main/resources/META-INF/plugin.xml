@@ -36,8 +36,8 @@
                     description="选中文件或目录，重新生成用例"/>
             <action id="cgt.RunCaseAction" class="com.spin.cgt.action.RunCaseAction" text="运行用例"
                     description="选中文件或目录，执行选中的用例"/>
-<!--            <action id="cgt.RunMethodAction" class="com.spin.cgt.action.RunMethodAction" text="运行方法"-->
-<!--                    description="仅运行方法，不生成用例"/>-->
+            <!--            <action id="cgt.RunMethodAction" class="com.spin.cgt.action.RunMethodAction" text="运行方法"-->
+            <!--                    description="仅运行方法，不生成用例"/>-->
             <action id="cgt.GenPreAction" class="com.spin.cgt.action.GenPreAction" text="初始化目录"
                     description="初始化工具目录"/>
             <action id="cgt.PreStartupAction" class="com.spin.cgt.action.PreStartupAction" text="预启动服务"
@@ -48,8 +48,8 @@
         <group id="CaseGenTool.EditorPopupMenu" text="单测用例生成" description="单元测试用例生成工具" popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <action id="cgt.GenCaseActionOnEditor" class="com.spin.cgt.action.GenCaseAction" text="生成用例"/>
-<!--            <action id="cgt.RunMethodActionOnEditor" class="com.spin.cgt.action.RunMethodAction" text="运行方法"-->
-<!--                    description="仅运行方法，不生成用例"/>-->
+            <!--            <action id="cgt.RunMethodActionOnEditor" class="com.spin.cgt.action.RunMethodAction" text="运行方法"-->
+            <!--                    description="仅运行方法，不生成用例"/>-->
             <action id="cgt.GenPreActionOnEditor" class="com.spin.cgt.action.GenPreAction" text="初始化目录"
                     description="初始化工具目录"/>
             <action id="cgt.PreStartupActionOnEditor" class="com.spin.cgt.action.PreStartupAction" text="预启动服务"

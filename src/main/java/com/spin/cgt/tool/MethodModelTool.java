@@ -21,6 +21,9 @@ import com.spin.cgt.cmd.model.MethodPath;
 import com.spin.cgt.constant.Constant;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
+
 public class MethodModelTool {
     public static GenModel getDefaultModel(@NotNull AnActionEvent e) {
         Project project = FileTool.getProject(e);
@@ -32,7 +35,14 @@ public class MethodModelTool {
 
         GenModel model = new GenModel();
 
-        DataContext dataContext = DataManager.getInstance().getDataContextFromFocus().getResult();
+
+        DataContext dataContext;
+        try {
+            dataContext = DataManager.getInstance().getDataContextFromFocusAsync().blockingGet(3000);
+        } catch (TimeoutException | ExecutionException ex) {
+            ex.printStackTrace();
+            return null;
+        }
         Editor editor = CommonDataKeys.EDITOR.getData(dataContext);
         if (editor != null) {
             PsiFile psiFile = CommonDataKeys.PSI_FILE.getData(dataContext);
@@ -45,12 +55,12 @@ public class MethodModelTool {
 
                 if (psiElement != null) {
                     MethodPath methodPath = null;
-                    if ("string".equals(psiElement.getNode().getElementType().getDebugName())) {
+                    if ("string".equals(psiElement.getNode().getElementType().toString())) {
                         methodPath = new MethodPath();
                         methodPath.stringText = psiElement.getText().replaceAll("^\"|\"$", "");
                     } else {
                         methodPath = new MethodPath();
-                        String parentName = psiElement.getParent().getNode().getElementType().getDebugName();
+                        String parentName = psiElement.getParent().getNode().getElementType().toString();
                         switch (parentName) {
                             case "FUNCTION_DECLARATION":
                                 methodPath.packagePath = FileTool.getPackage(psiFile, projectDir);

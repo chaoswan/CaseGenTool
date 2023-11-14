@@ -42,7 +42,7 @@ func TestRun(t *testing.T) {
 }
 
 func TestBoot(t *testing.T) {
-	cmd_server.StartupServer()
+	cmd_server.StartupServer(t)
 }
 
 func TestCmd(t *testing.T) {

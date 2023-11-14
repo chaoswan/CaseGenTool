@@ -1,13 +1,8 @@
 package com.spin.cgt.action;
 
-import com.goide.psi.GoFile;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
 import com.spin.cgt.cmd.Cmd;
 import com.spin.cgt.cmd.CmdClient;
 import com.spin.cgt.cmd.CmdResult;

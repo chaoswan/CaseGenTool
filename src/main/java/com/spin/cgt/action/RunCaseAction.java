@@ -34,7 +34,7 @@ public class RunCaseAction extends AnAction {
             } else {
                 Messages.showErrorDialog("执行异常", "执行失败");
             }
-        }else {
+        } else {
             GotestRunTool.runGoTest(e, "TestCmd", stringCmd);
         }
     }

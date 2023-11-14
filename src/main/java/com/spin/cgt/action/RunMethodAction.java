@@ -1,6 +1,5 @@
 package com.spin.cgt.action;
 
-import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.Messages;
@@ -19,11 +18,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 
 public class RunMethodAction extends AnAction {
-
-    @Override
-    public @NotNull ActionUpdateThread getActionUpdateThread() {
-        return ActionUpdateThread.BGT;
-    }
 
     public RunMethodAction() {
         super();

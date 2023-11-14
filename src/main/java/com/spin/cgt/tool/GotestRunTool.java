@@ -21,8 +21,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.spin.cgt.cmd.Cmd;
-import com.spin.cgt.cmd.CmdClient;
-import com.spin.cgt.cmd.CmdResult;
 import com.spin.cgt.constant.Constant;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,7 +1,6 @@
 package com.spin.cgt.tool;
 
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBTextArea;
@@ -15,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -80,6 +78,7 @@ public class MethodDialogTool {
         DialogWrapper genDialog = new DialogWrapper(true) {
             {
                 setTitle(title);
+                setModal(false);
                 init();
             }
 
