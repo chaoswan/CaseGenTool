@@ -7,7 +7,7 @@ import com.goide.execution.testing.frameworks.gotest.GotestFramework;
 import com.goide.psi.GoFile;
 import com.intellij.execution.*;
 import com.intellij.execution.configurations.ConfigurationFactory;
-import com.intellij.execution.executors.DefaultRunExecutor;
+import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.runners.ExecutionEnvironmentBuilder;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -60,7 +60,7 @@ public class GotestRunTool {
             runConfiguration.setParams(param.toString());
 
 
-            Executor executor = DefaultRunExecutor.getRunExecutorInstance();
+            Executor executor = DefaultDebugExecutor.getDebugExecutorInstance();
             RunnerAndConfigurationSettings configurationSettings = RunManager.getInstance(project).createConfiguration(runConfiguration, configurationFactory);
             ExecutionEnvironment environment = ExecutionEnvironmentBuilder.create(executor, configurationSettings).build();
 
