@@ -32,7 +32,7 @@ public class GenCaseAction extends AnAction {
         MethodDialogTool.showDialog("生成用例", MethodModelTool.getDefaultModel(e), model -> genCase(e, model));
     }
 
-    public void genCase(AnActionEvent e, GenModel model) {
+    public boolean genCase(AnActionEvent e, GenModel model) {
         StringBuilder emptyFields = new StringBuilder();
         if (model.region == null || model.region.isEmpty()) {
             emptyFields.append("地区").append(",");
@@ -60,7 +60,7 @@ public class GenCaseAction extends AnAction {
             emptyFields.setLength(emptyFields.length() - 1);
             emptyFields.append(" 不能为空");
             Messages.showErrorDialog(emptyFields.toString(), "参数为空");
-            return;
+            return false;
         }
 
 
@@ -78,13 +78,16 @@ public class GenCaseAction extends AnAction {
                     Messages.showInfoMessage("生成成功", "生成成功");
                 } else {
                     Messages.showErrorDialog(data, "生成失败");
+                    return false;
                 }
             } else {
                 Messages.showErrorDialog("生成失败", "生成失败");
+                return false;
             }
         } else {
             GotestRunTool.runGoTest(e, "TestCmd", genModelCmd);
         }
+        return true;
     }
 
     @Override

@@ -16,15 +16,15 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 public class MethodDialogTool {
     private static String[] regions = new String[]{"ID", "MY", "VN", "PH", "TH", "SG"};
     private static String[] envs = new String[]{"test", "uat", "live"};
-    private static String[] types = new String[]{"rpc", "task", "event"};
+    private static String[] types = new String[]{"rpc", "task", "event", "consumer"};
 
-    public static void showDialog(@NotNull String title, @Nullable GenModel model, @NotNull Consumer<GenModel> callFunc) {
+    public static void showDialog(@NotNull String title, @Nullable GenModel model, @NotNull Function<GenModel, Boolean> callFunc) {
         JBPanel panel = new JBPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -121,9 +121,9 @@ public class MethodDialogTool {
                         }
                 );
 
-                callFunc.accept(genModel);
-
-                super.doOKAction();
+                if (callFunc.apply(genModel)) {
+                    super.doOKAction();
+                }
             }
         };
         genDialog.show();
