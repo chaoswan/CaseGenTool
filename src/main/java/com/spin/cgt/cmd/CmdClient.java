@@ -14,6 +14,7 @@ import java.net.Socket;
 public class CmdClient {
     public static void Cmd(Cmd cmd, CmdResult cmdResult) {
         try (Socket socket = new Socket(Constant.CMD_SERVER_ADDR, Constant.CMD_SERVER_PORT)) {
+            socket.setSoTimeout(10000);
             // 发送请求
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println(cmd);
