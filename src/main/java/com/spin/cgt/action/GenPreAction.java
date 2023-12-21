@@ -6,6 +6,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -26,28 +27,29 @@ public class GenPreAction extends AnAction {
         Project project = FileTool.getProject(e);
         VirtualFile projectDir = FileTool.getProjectDir(project);
 
-        try {
-            VirtualFile test = createDir(projectDir, "test");
-            VirtualFile autoRoot = createDir(test, "auto_test");
-            VirtualFile pre = createDir(autoRoot, "pre");
-            createDir(autoRoot, "cases");
+        VirtualFile test = createDir(projectDir, "test");
+        VirtualFile autoRoot = createDir(test, "auto_test");
+        VirtualFile pre = createDir(autoRoot, "pre");
+        createDir(autoRoot, "cases");
 
-            createPreFile(project, projectDir, pre);
-            createEntryFile(project, projectDir, autoRoot);
-        } catch (IOException ex) {
-            throw new CgtException(ex);
-        }
-
+        createPreFile(project, projectDir, pre);
+        createEntryFile(project, projectDir, autoRoot);
     }
 
-    private VirtualFile createDir(VirtualFile dir, String childPath) throws IOException {
-        VirtualFile child = dir.findChild(childPath);
-        if (child == null) {
-            child = dir.createChildDirectory(null, childPath);
-        } else if (!child.isDirectory()) {
-            throw new IOException("is not directory");
-        }
-        return child;
+    private VirtualFile createDir(VirtualFile dir, String childPath) {
+        return ApplicationManager.getApplication().runWriteAction((Computable<VirtualFile>) () -> {
+            VirtualFile child = dir.findChild(childPath);
+            if (child == null) {
+                try {
+                    child = dir.createChildDirectory(null, childPath);
+                } catch (IOException e) {
+                    throw new CgtException(e);
+                }
+            } else if (!child.isDirectory()) {
+                throw new CgtException("is not directory");
+            }
+            return child;
+        });
     }
 
     private List<String> GetAnonymousImports(PsiElement parent) {
