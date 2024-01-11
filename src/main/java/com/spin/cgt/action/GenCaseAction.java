@@ -81,7 +81,6 @@ public class GenCaseAction extends AnAction {
                     return false;
                 }
             } else {
-                Messages.showErrorDialog("生成失败", "生成失败");
                 return false;
             }
         } else {

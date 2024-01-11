@@ -46,7 +46,7 @@ public class GenPreAction extends AnAction {
                     throw new CgtException(e);
                 }
             } else if (!child.isDirectory()) {
-                throw new CgtException("is not directory");
+                throw new CgtException(child.getPath() + " is not directory");
             }
             return child;
         });

@@ -74,7 +74,6 @@ public class RunMethodAction extends AnAction {
                     return false;
                 }
             } else {
-                Messages.showErrorDialog("执行失败", "执行失败");
                 return false;
             }
         } else {

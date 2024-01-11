@@ -33,6 +33,7 @@ public class MethodDialogTool {
         List<JRadioButton> typeRadios = addRadioButton(types, model != null ? model.type : null, "用例类型:    ", panel);
 
         JBTextField methodT = new JBTextField();
+        methodT.setMaximumSize(new Dimension(500, 30));
         JPanel methodP = createFormItem("方法路径:    ", methodT);
         panel.add(methodP);
         if (model != null && model.method != null) {
@@ -40,6 +41,7 @@ public class MethodDialogTool {
         }
 
         JBTextField suffixT = new JBTextField();
+        suffixT.setMaximumSize(new Dimension(500, 30));
         JPanel suffixP = createFormItem("用例名后缀:    ", suffixT);
         panel.add(suffixP);
         if (model != null && model.suffix != null) {
@@ -48,6 +50,7 @@ public class MethodDialogTool {
 
         JBTextField dirT = new JBTextField();
         JPanel dirP = createFormItem("用例存放目录:    ", dirT);
+        dirT.setMaximumSize(new Dimension(500, 30));
         panel.add(dirP);
         if (model != null) {
             if (model.dir != null) {
@@ -84,7 +87,7 @@ public class MethodDialogTool {
 
             @Override
             protected JComponent createCenterPanel() {
-                panel.setPreferredSize(new Dimension(500, 600));
+                panel.setPreferredSize(new Dimension(500, 800));
                 return panel;
             }
 
@@ -178,13 +181,16 @@ public class MethodDialogTool {
             JBTextArea requestT = new JBTextArea();
             requestT.setAlignmentX(Component.LEFT_ALIGNMENT);
             requestT.setAutoscrolls(true);
-            requestT.setRows(totoRow / requestSize);
+//            requestT.setRows(totoRow / requestSize);
             areaP.add(requestT);
             areaP.setSize(500, totalHeight / requestSize);
             areaP.setBorder(new EmptyBorder(0, 0, 10, 0));
             areaP.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            panel.add(areaP);
+            JScrollPane scrollPanel = new JScrollPane(areaP);
+            scrollPanel.setPreferredSize(new Dimension(500, 700));
+
+            panel.add(scrollPanel);
             requestTs.add(requestT);
             if (model != null && model.request != null && model.request.length > i) {
                 requestT.setText(model.request[i]);

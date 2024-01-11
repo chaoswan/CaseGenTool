@@ -32,8 +32,6 @@ public class ReGenCaseAction extends AnAction {
             CmdClient.Cmd(stringCmd, cmdResult);
             if (cmdResult.isSuccess()) {
                 Messages.showErrorDialog(cmdResult.getData(), "执行成功");
-            } else {
-                Messages.showErrorDialog("执行异常", "执行失败");
             }
         } else {
             GotestRunTool.runGoTest(e, "TestCmd", stringCmd);
