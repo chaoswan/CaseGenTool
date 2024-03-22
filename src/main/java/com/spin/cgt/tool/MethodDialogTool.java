@@ -34,7 +34,7 @@ public class MethodDialogTool {
 
         JBTextField methodT = new JBTextField();
         methodT.setMaximumSize(new Dimension(500, 30));
-        JPanel methodP = createFormItem("方法路径:    ", methodT);
+        JPanel methodP = createFormItem("方法路径:        ", methodT);
         panel.add(methodP);
         if (model != null && model.method != null) {
             methodT.setText(model.method);
@@ -42,7 +42,7 @@ public class MethodDialogTool {
 
         JBTextField suffixT = new JBTextField();
         suffixT.setMaximumSize(new Dimension(500, 30));
-        JPanel suffixP = createFormItem("用例名后缀:    ", suffixT);
+        JPanel suffixP = createFormItem("用例名后缀:      ", suffixT);
         panel.add(suffixP);
         if (model != null && model.suffix != null) {
             suffixT.setText(model.suffix);
@@ -58,6 +58,14 @@ public class MethodDialogTool {
             } else {
                 dirT.setText(model.method.replace(".", "/"));
             }
+        }
+
+        JBTextField metadataT = new JBTextField();
+        JPanel metadataP = createFormItem("Metadata(可选):   ", metadataT);
+        metadataT.setMaximumSize(new Dimension(500, 30));
+        panel.add(metadataP);
+        if (model != null && model.metadata != null) {
+            metadataT.setText(model.metadata);
         }
 
         List<JBTextArea> requestTs = addRequestText(panel, model);
@@ -117,6 +125,7 @@ public class MethodDialogTool {
                 genModel.method = methodT.getText();
                 genModel.suffix = suffixT.getText();
                 genModel.dir = dirT.getText();
+                genModel.metadata = metadataT.getText();
                 genModel.request = new String[requestTs.size()];
                 IntStream.range(0, requestTs.size()).forEach(
                         idx -> {
@@ -172,7 +181,7 @@ public class MethodDialogTool {
         List<JBTextArea> requestTs = new LinkedList<>();
 
         int totalHeight = 900;
-        int totoRow = 24;
+        int totalRow = 24;
         int requestSize = 1;// 目前仅有 一个参数场景
         for (int i = 0; i < requestSize; i++) {
             JBPanel areaP = new JBPanel();
@@ -181,7 +190,7 @@ public class MethodDialogTool {
             JBTextArea requestT = new JBTextArea();
             requestT.setAlignmentX(Component.LEFT_ALIGNMENT);
             requestT.setAutoscrolls(true);
-//            requestT.setRows(totoRow / requestSize);
+//            requestT.setRows(totalRow / requestSize);
             areaP.add(requestT);
             areaP.setSize(500, totalHeight / requestSize);
             areaP.setBorder(new EmptyBorder(0, 0, 10, 0));

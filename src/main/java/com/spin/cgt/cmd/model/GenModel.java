@@ -8,6 +8,7 @@ public class GenModel {
     public String type;
     public String method;
     public String suffix;
+    public String metadata;
     public String[] request;
     public String dir;
 
@@ -19,6 +20,7 @@ public class GenModel {
                 ", type='" + type + '\'' +
                 ", method='" + method + '\'' +
                 ", suffix='" + suffix + '\'' +
+                ", metadata='" + metadata + '\'' +
                 ", request=" + Arrays.toString(request) +
                 ", dir='" + dir + '\'' +
                 '}';

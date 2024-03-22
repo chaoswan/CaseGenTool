@@ -7,6 +7,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Computable;
+import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -34,6 +35,8 @@ public class GenPreAction extends AnAction {
 
         createPreFile(project, projectDir, pre);
         createEntryFile(project, projectDir, autoRoot);
+
+        LocalFileSystem.getInstance().refreshAndFindFileByPath(FileTool.getProject(e).getBasePath() + "/" + Constant.TEST_ROOT_DIR);
     }
 
     private VirtualFile createDir(VirtualFile dir, String childPath) {

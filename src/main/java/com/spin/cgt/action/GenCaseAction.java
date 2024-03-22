@@ -3,6 +3,7 @@ package com.spin.cgt.action;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.vfs.LocalFileSystem;
 import com.spin.cgt.cmd.Cmd;
 import com.spin.cgt.cmd.CmdClient;
 import com.spin.cgt.cmd.CmdResult;
@@ -76,6 +77,7 @@ public class GenCaseAction extends AnAction {
                 String data = cmdResult.getData();
                 if (data.isEmpty()) {
                     Messages.showInfoMessage("生成成功", "生成成功");
+                    LocalFileSystem.getInstance().refreshAndFindFileByPath(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR);
                 } else {
                     Messages.showErrorDialog(data, "生成失败");
                     return false;
@@ -85,6 +87,7 @@ public class GenCaseAction extends AnAction {
             }
         } else {
             GotestRunTool.runGoTest(e, "TestCmd", genModelCmd);
+            LocalFileSystem.getInstance().refreshAndFindFileByPath(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR);
         }
         return true;
     }

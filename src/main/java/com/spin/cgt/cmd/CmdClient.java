@@ -15,8 +15,12 @@ import java.net.SocketTimeoutException;
 
 public class CmdClient {
     public static void Cmd(Cmd cmd, CmdResult cmdResult) {
+        Cmd(cmd, cmdResult, 30000);
+    }
+
+    public static void Cmd(Cmd cmd, CmdResult cmdResult, int timeout) {
         try (Socket socket = new Socket(Constant.CMD_SERVER_ADDR, Constant.CMD_SERVER_PORT)) {
-            socket.setSoTimeout(10000);
+            socket.setSoTimeout(timeout);
             // 发送请求
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println(cmd);
@@ -32,10 +36,10 @@ public class CmdClient {
             cmdResult.setStringData(result.toString(), cmdResult.getData().getClass());
             LogTool.LOGGER.info("Server response: " + result);
         } catch (SocketTimeoutException e) {
-            Messages.showErrorDialog(e.getMessage(),  "执行超时");
+            Messages.showErrorDialog(e.getMessage(), "执行超时");
             e.printStackTrace();
         } catch (IOException e) {
-            Messages.showErrorDialog(e.getMessage(),  "执行异常");
+            Messages.showErrorDialog(e.getMessage(), "执行异常");
             e.printStackTrace();
         }
     }

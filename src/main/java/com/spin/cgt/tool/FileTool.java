@@ -7,6 +7,8 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.util.Computable;
@@ -26,8 +28,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class FileTool {
-    private static String TPL_ROOT_DIR = "tpl/";
-
     public static VirtualFile getFile(@NotNull AnActionEvent e) {
         return CommonDataKeys.VIRTUAL_FILE.getData(e.getDataContext());
     }
@@ -48,9 +48,7 @@ public class FileTool {
     }
 
     public static PsiFile generateFileWithTpl(@NotNull String tplName, @NotNull Map<String, String> placeholder, @NotNull Project project, @NotNull String fileName) {
-        ClassLoader classLoader = FileTool.class.getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream(TPL_ROOT_DIR + tplName);
-
+        InputStream inputStream = TplZipTool.unzipTpl(tplName);
         if (inputStream != null) {
             try (Scanner scanner = new Scanner(inputStream)) {
                 StringBuilder sb = new StringBuilder();
@@ -106,5 +104,15 @@ public class FileTool {
 
         String path = VfsUtilCore.getRelativePath(psiFile.getContainingDirectory().getVirtualFile(), projectDir);
         return projectPackageName + "/" + path;
+    }
+
+    public static void gotoCaseFile(AnActionEvent e, String path) {
+        Project project = getProject(e);
+        VirtualFile file = LocalFileSystem.getInstance().findFileByPath(path);
+        if (file == null || !file.isValid()) {
+            return;
+        }
+        OpenFileDescriptor descriptor = new OpenFileDescriptor(project, file);
+        FileEditorManager.getInstance(project).openEditor(descriptor, true);
     }
 }
