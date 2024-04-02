@@ -33,7 +33,9 @@ public class CmdClient {
                 result.append(line);
             }
             cmdResult.setSuccess(true);
-            cmdResult.setStringData(result.toString(), cmdResult.getData().getClass());
+            if (result.toString().length() > 0) {
+                cmdResult.setStringData(result.toString(), cmdResult.getData().getClass());
+            }
             LogTool.LOGGER.info("Server response: " + result);
         } catch (SocketTimeoutException e) {
             Messages.showErrorDialog(e.getMessage(), "执行超时");
