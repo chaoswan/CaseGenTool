@@ -26,7 +26,7 @@ public class CmdResult<T extends Object> {
         this.data = data;
     }
 
-    public void setStringData(String dataText, Class<T> clazz){
+    public void setStringData(String dataText, Class<T> clazz) {
         setData(JsonUtil.fromJson(dataText, clazz));
     }
 }

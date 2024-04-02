@@ -1,7 +1,6 @@
 package com.spin.cgt.tool;
 
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBTextArea;
@@ -15,18 +14,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 public class MethodDialogTool {
     private static String[] regions = new String[]{"ID", "MY", "VN", "PH", "TH", "SG"};
     private static String[] envs = new String[]{"test", "uat", "live"};
-    private static String[] types = new String[]{"rpc", "task", "event"};
+    private static String[] types = new String[]{"rpc", "task", "event", "consumer"};
 
-    public static void showDialog(@NotNull String title, @Nullable GenModel model, @NotNull Consumer<GenModel> callFunc) {
+    public static void showDialog(@NotNull String title, @Nullable GenModel model, @NotNull Function<GenModel, Boolean> callFunc) {
         JBPanel panel = new JBPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -35,14 +33,16 @@ public class MethodDialogTool {
         List<JRadioButton> typeRadios = addRadioButton(types, model != null ? model.type : null, "用例类型:    ", panel);
 
         JBTextField methodT = new JBTextField();
-        JPanel methodP = createFormItem("方法路径:    ", methodT);
+        methodT.setMaximumSize(new Dimension(500, 30));
+        JPanel methodP = createFormItem("方法路径:        ", methodT);
         panel.add(methodP);
         if (model != null && model.method != null) {
             methodT.setText(model.method);
         }
 
         JBTextField suffixT = new JBTextField();
-        JPanel suffixP = createFormItem("用例名后缀:    ", suffixT);
+        suffixT.setMaximumSize(new Dimension(500, 30));
+        JPanel suffixP = createFormItem("用例名后缀:      ", suffixT);
         panel.add(suffixP);
         if (model != null && model.suffix != null) {
             suffixT.setText(model.suffix);
@@ -50,6 +50,7 @@ public class MethodDialogTool {
 
         JBTextField dirT = new JBTextField();
         JPanel dirP = createFormItem("用例存放目录:    ", dirT);
+        dirT.setMaximumSize(new Dimension(500, 30));
         panel.add(dirP);
         if (model != null) {
             if (model.dir != null) {
@@ -57,6 +58,14 @@ public class MethodDialogTool {
             } else {
                 dirT.setText(model.method.replace(".", "/"));
             }
+        }
+
+        JBTextField metadataT = new JBTextField();
+        JPanel metadataP = createFormItem("Metadata(可选):   ", metadataT);
+        metadataT.setMaximumSize(new Dimension(500, 30));
+        panel.add(metadataP);
+        if (model != null && model.metadata != null) {
+            metadataT.setText(model.metadata);
         }
 
         List<JBTextArea> requestTs = addRequestText(panel, model);
@@ -80,12 +89,13 @@ public class MethodDialogTool {
         DialogWrapper genDialog = new DialogWrapper(true) {
             {
                 setTitle(title);
+                setModal(false);
                 init();
             }
 
             @Override
             protected JComponent createCenterPanel() {
-                panel.setPreferredSize(new Dimension(500, 600));
+                panel.setPreferredSize(new Dimension(500, 800));
                 return panel;
             }
 
@@ -115,6 +125,7 @@ public class MethodDialogTool {
                 genModel.method = methodT.getText();
                 genModel.suffix = suffixT.getText();
                 genModel.dir = dirT.getText();
+                genModel.metadata = metadataT.getText();
                 genModel.request = new String[requestTs.size()];
                 IntStream.range(0, requestTs.size()).forEach(
                         idx -> {
@@ -122,9 +133,9 @@ public class MethodDialogTool {
                         }
                 );
 
-                callFunc.accept(genModel);
-
-                super.doOKAction();
+                if (callFunc.apply(genModel)) {
+                    super.doOKAction();
+                }
             }
         };
         genDialog.show();
@@ -170,7 +181,7 @@ public class MethodDialogTool {
         List<JBTextArea> requestTs = new LinkedList<>();
 
         int totalHeight = 900;
-        int totoRow = 24;
+        int totalRow = 24;
         int requestSize = 1;// 目前仅有 一个参数场景
         for (int i = 0; i < requestSize; i++) {
             JBPanel areaP = new JBPanel();
@@ -179,13 +190,16 @@ public class MethodDialogTool {
             JBTextArea requestT = new JBTextArea();
             requestT.setAlignmentX(Component.LEFT_ALIGNMENT);
             requestT.setAutoscrolls(true);
-            requestT.setRows(totoRow / requestSize);
+//            requestT.setRows(totalRow / requestSize);
             areaP.add(requestT);
             areaP.setSize(500, totalHeight / requestSize);
             areaP.setBorder(new EmptyBorder(0, 0, 10, 0));
             areaP.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            panel.add(areaP);
+            JScrollPane scrollPanel = new JScrollPane(areaP);
+            scrollPanel.setPreferredSize(new Dimension(500, 700));
+
+            panel.add(scrollPanel);
             requestTs.add(requestT);
             if (model != null && model.request != null && model.request.length > i) {
                 requestT.setText(model.request[i]);

@@ -7,6 +7,7 @@ import com.goide.execution.testing.frameworks.gotest.GotestFramework;
 import com.goide.psi.GoFile;
 import com.intellij.execution.*;
 import com.intellij.execution.configurations.ConfigurationFactory;
+import com.intellij.execution.executors.DefaultDebugExecutor;
 import com.intellij.execution.executors.DefaultRunExecutor;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.execution.runners.ExecutionEnvironmentBuilder;
@@ -21,14 +22,17 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.spin.cgt.cmd.Cmd;
-import com.spin.cgt.cmd.CmdClient;
-import com.spin.cgt.cmd.CmdResult;
 import com.spin.cgt.constant.Constant;
+import com.spin.cgt.setting.CgtPluginSettings;
 import org.jetbrains.annotations.NotNull;
 
 public class GotestRunTool {
     public static void runGoTest(@NotNull AnActionEvent e, @NotNull String methodName, Cmd cmd) {
         Project project = FileTool.getProject(e);
+        runGoTest(project, methodName, cmd);
+    }
+
+    public static void runGoTest(@NotNull Project project, @NotNull String methodName, Cmd cmd) {
         VirtualFile projectDir = FileTool.getProjectDir(project);
         VirtualFile entryFile = projectDir.findFileByRelativePath(Constant.ENTRY_FILE);
         if (entryFile == null) {
@@ -61,8 +65,12 @@ public class GotestRunTool {
             StringBuilder param = new StringBuilder().append("-carg ").append(carg);
             runConfiguration.setParams(param.toString());
 
-
-            Executor executor = DefaultRunExecutor.getRunExecutorInstance();
+            Executor executor = null;
+            if (CgtPluginSettings.enableDebug()) {
+                executor = DefaultDebugExecutor.getDebugExecutorInstance();
+            } else {
+                executor = DefaultRunExecutor.getRunExecutorInstance();
+            }
             RunnerAndConfigurationSettings configurationSettings = RunManager.getInstance(project).createConfiguration(runConfiguration, configurationFactory);
             ExecutionEnvironment environment = ExecutionEnvironmentBuilder.create(executor, configurationSettings).build();
 

@@ -2,7 +2,6 @@ package com.spin.cgt.action;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.spin.cgt.cmd.Cmd;
@@ -33,8 +32,6 @@ public class ReGenCaseAction extends AnAction {
             CmdClient.Cmd(stringCmd, cmdResult);
             if (cmdResult.isSuccess()) {
                 Messages.showErrorDialog(cmdResult.getData(), "执行成功");
-            } else {
-                Messages.showErrorDialog("执行异常", "执行失败");
             }
         } else {
             GotestRunTool.runGoTest(e, "TestCmd", stringCmd);

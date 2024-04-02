@@ -1,10 +1,9 @@
 package com.spin.cgt.util;
 
 import com.google.gson.Gson;
-import com.spin.cgt.cmd.Cmd;
 
 public class JsonUtil {
-    private static Gson gson = new Gson();
+    private final static Gson gson = new Gson();
 
     public static String toJson(Object data) {
         return gson.toJson(data);

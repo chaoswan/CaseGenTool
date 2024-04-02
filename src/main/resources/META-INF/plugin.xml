@@ -26,6 +26,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.spin.cgt.CgtStartupActivity" order="last"/>
     </extensions>
     <actions>
         <group id="CaseGenTool.ProjectViewPopupMenu" text="单测用例生成" description="单元测试用例生成工具"
@@ -34,28 +35,39 @@
             <action id="cgt.GenCaseAction" class="com.spin.cgt.action.GenCaseAction" text="生成用例"/>
             <action id="cgt.ReGenCaseAction" class="com.spin.cgt.action.ReGenCaseAction" text="重新生成用例"
                     description="选中文件或目录，重新生成用例"/>
-            <action id="cgt.RunCaseAction" class="com.spin.cgt.action.RunCaseAction" text="运行用例"
-                    description="选中文件或目录，执行选中的用例"/>
-<!--            <action id="cgt.RunMethodAction" class="com.spin.cgt.action.RunMethodAction" text="运行方法"-->
-<!--                    description="仅运行方法，不生成用例"/>-->
             <action id="cgt.GenPreAction" class="com.spin.cgt.action.GenPreAction" text="初始化目录"
                     description="初始化工具目录"/>
             <action id="cgt.PreStartupAction" class="com.spin.cgt.action.PreStartupAction" text="预启动服务"
                     description="启动服务，提高后续生成及执行用例速度"/>
             <action id="cgt.StopAction" class="com.spin.cgt.action.StopAction" text="停止服务"
                     description="停止服务，将展示所有单测执行结果"/>
+            <action id="cgt.ToggleDebugAction" class="com.spin.cgt.action.ToggleDebugAction" text="启用debug模式"
+                    description="切换Debug/Run模式运行"/>
+            <action id="cgt.ToggleCodeMonitorAction" class="com.spin.cgt.action.ToggleCodeMonitorAction"
+                    text="启用代码变更监测"
+                    description="预启动服务时，是否监测代码变更"/>
+        </group>
+        <group id="CaseGenTool.RunCase" text="运行用例">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after"
+                          relative-to-action="CaseGenTool.ProjectViewPopupMenu"/>
+            <action id="cgt.RunCaseAction" class="com.spin.cgt.action.RunCaseAction" text="运行用例"
+                    description="选中文件或目录，执行选中的用例"/>
         </group>
         <group id="CaseGenTool.EditorPopupMenu" text="单测用例生成" description="单元测试用例生成工具" popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <action id="cgt.GenCaseActionOnEditor" class="com.spin.cgt.action.GenCaseAction" text="生成用例"/>
-<!--            <action id="cgt.RunMethodActionOnEditor" class="com.spin.cgt.action.RunMethodAction" text="运行方法"-->
-<!--                    description="仅运行方法，不生成用例"/>-->
             <action id="cgt.GenPreActionOnEditor" class="com.spin.cgt.action.GenPreAction" text="初始化目录"
                     description="初始化工具目录"/>
             <action id="cgt.PreStartupActionOnEditor" class="com.spin.cgt.action.PreStartupAction" text="预启动服务"
                     description="启动服务，提高后续生成及执行用例速度"/>
             <action id="cgt.StopActionOnEditor" class="com.spin.cgt.action.StopAction" text="停止服务"
                     description="停止服务，将展示所有单测执行结果"/>
+            <action id="cgt.ToggleDebugActionOnEditor" class="com.spin.cgt.action.ToggleDebugAction"
+                    text="启用debug模式"
+                    description="切换Debug/Run模式运行"/>
+            <action id="cgt.ToggleCodeMonitorActionOnEditor" class="com.spin.cgt.action.ToggleCodeMonitorAction"
+                    text="启用代码变更监测"
+                    description="预启动服务时，是否监测代码变更"/>
         </group>
     </actions>
 </idea-plugin>

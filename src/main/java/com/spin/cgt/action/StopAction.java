@@ -9,7 +9,6 @@ import com.spin.cgt.cmd.CmdClient;
 import com.spin.cgt.cmd.CmdResult;
 import com.spin.cgt.constant.Constant;
 import com.spin.cgt.tool.FileTool;
-import com.spin.cgt.tool.GotestRunTool;
 import org.jetbrains.annotations.NotNull;
 
 public class StopAction extends AnAction {
@@ -27,8 +26,6 @@ public class StopAction extends AnAction {
         CmdClient.Cmd(stringCmd, cmdResult);
         if (cmdResult.isSuccess()) {
             Messages.showErrorDialog(cmdResult.getData(), "执行成功");
-        } else {
-            Messages.showErrorDialog("执行异常", "执行失败");
         }
     }
 }

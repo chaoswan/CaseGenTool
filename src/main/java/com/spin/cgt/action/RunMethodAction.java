@@ -1,6 +1,5 @@
 package com.spin.cgt.action;
 
-import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.Messages;
@@ -20,11 +19,6 @@ import javax.swing.*;
 
 public class RunMethodAction extends AnAction {
 
-    @Override
-    public @NotNull ActionUpdateThread getActionUpdateThread() {
-        return ActionUpdateThread.BGT;
-    }
-
     public RunMethodAction() {
         super();
     }
@@ -38,7 +32,7 @@ public class RunMethodAction extends AnAction {
         MethodDialogTool.showDialog("运行方法", MethodModelTool.getDefaultModel(e), model -> runMethod(e, model));
     }
 
-    public void runMethod(AnActionEvent e, GenModel model) {
+    public boolean runMethod(AnActionEvent e, GenModel model) {
         StringBuilder emptyFields = new StringBuilder();
         if (model.region == null || model.region.isEmpty()) {
             emptyFields.append("地区").append(",");
@@ -60,7 +54,7 @@ public class RunMethodAction extends AnAction {
             emptyFields.setLength(emptyFields.length() - 1);
             emptyFields.append(" 不能为空");
             Messages.showErrorDialog(emptyFields.toString(), "参数为空");
-            return;
+            return false;
         }
 
 
@@ -77,13 +71,15 @@ public class RunMethodAction extends AnAction {
                     Messages.showInfoMessage("执行成功", "执行成功");
                 } else {
                     Messages.showErrorDialog(data, "执行失败");
+                    return false;
                 }
             } else {
-                Messages.showErrorDialog("执行失败", "执行失败");
+                return false;
             }
         } else {
             GotestRunTool.runGoTest(e, "TestCmd", genModelCmd);
         }
+        return true;
     }
 
     @Override

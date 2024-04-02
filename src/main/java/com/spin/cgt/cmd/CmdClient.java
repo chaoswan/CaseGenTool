@@ -1,5 +1,6 @@
 package com.spin.cgt.cmd;
 
+import com.intellij.openapi.ui.Messages;
 import com.spin.cgt.constant.Constant;
 import com.spin.cgt.tool.LogTool;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +15,12 @@ import java.net.SocketTimeoutException;
 
 public class CmdClient {
     public static void Cmd(Cmd cmd, CmdResult cmdResult) {
+        Cmd(cmd, cmdResult, 30000);
+    }
+
+    public static void Cmd(Cmd cmd, CmdResult cmdResult, int timeout) {
         try (Socket socket = new Socket(Constant.CMD_SERVER_ADDR, Constant.CMD_SERVER_PORT)) {
+            socket.setSoTimeout(timeout);
             // 发送请求
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println(cmd);
@@ -27,9 +33,15 @@ public class CmdClient {
                 result.append(line);
             }
             cmdResult.setSuccess(true);
-            cmdResult.setStringData(result.toString(), cmdResult.getData().getClass());
+            if (result.toString().length() > 0) {
+                cmdResult.setStringData(result.toString(), cmdResult.getData().getClass());
+            }
             LogTool.LOGGER.info("Server response: " + result);
+        } catch (SocketTimeoutException e) {
+            Messages.showErrorDialog(e.getMessage(), "执行超时");
+            e.printStackTrace();
         } catch (IOException e) {
+            Messages.showErrorDialog(e.getMessage(), "执行异常");
             e.printStackTrace();
         }
     }

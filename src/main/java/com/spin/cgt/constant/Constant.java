@@ -2,6 +2,7 @@ package com.spin.cgt.constant;
 
 public interface Constant {
     String ENTRY_FILE = "test/auto_test/gen_case_test.go";
+    String TEST_ROOT_DIR = "test/auto_test/";
     String CASE_DIR = "test/auto_test/cases/";
 
     String CMD_SERVER_ADDR = "localhost";
