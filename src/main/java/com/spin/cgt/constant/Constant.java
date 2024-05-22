@@ -16,4 +16,5 @@ public interface Constant {
     String CMD_TYPE_RUN_CASE = "runCase";
     String CMD_TYPE_RE_GEN_CASE = "reGenCase";
     String CMD_TYPE_RUN_METHOD = "runMethod";
+    String CMD_TYPE_SECOND_GEN_CASE = "secondGenCase";
 }

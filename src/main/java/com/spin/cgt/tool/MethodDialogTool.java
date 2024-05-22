@@ -20,7 +20,7 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 
 public class MethodDialogTool {
-    private static String[] regions = new String[]{"ID", "MY", "VN", "PH", "TH", "SG"};
+    private static String[] regions = new String[]{"ID", "MY", "VN", "PH", "TH", "SG", "BR"};
     private static String[] envs = new String[]{"test", "uat", "live"};
     private static String[] types = new String[]{"rpc", "task", "event", "consumer"};
 

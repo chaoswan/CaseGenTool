@@ -40,6 +40,8 @@
             <action id="cgt.GenCaseAction" class="com.spin.cgt.action.GenCaseAction" text="生成用例"/>
             <action id="cgt.ReGenCaseAction" class="com.spin.cgt.action.ReGenCaseAction" text="重新生成用例"
                     description="选中文件或目录，重新生成用例"/>
+            <action id="cgt.SecondGenCaseAction" class="com.spin.cgt.action.SecondGenCaseAction" text="二次生成用例"
+                    description="选中文件或目录，二次生成用例，相比重新生成用例，会优先复用用例内已有的mock"/>
             <action id="cgt.GenPreAction" class="com.spin.cgt.action.GenPreAction" text="初始化目录"
                     description="初始化工具目录"/>
             <action id="cgt.PreStartupAction" class="com.spin.cgt.action.PreStartupAction" text="预启动服务"
