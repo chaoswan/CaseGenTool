@@ -34,29 +34,7 @@ public class GenCaseAction extends AnAction {
     }
 
     public boolean genCase(AnActionEvent e, GenModel model) {
-        StringBuilder emptyFields = new StringBuilder();
-        if (model.region == null || model.region.isEmpty()) {
-            emptyFields.append("地区").append(",");
-        }
-        if (model.env == null || model.env.isEmpty()) {
-            emptyFields.append("环境").append(",");
-        }
-        if (model.type == null || model.type.isEmpty()) {
-            emptyFields.append("用例类型").append(",");
-        }
-        if (model.method == null || model.method.isEmpty()) {
-            emptyFields.append("方法路径").append(",");
-        }
-        if (model.suffix == null || model.suffix.isEmpty()) {
-            emptyFields.append("用例名后缀").append(",");
-        }
-        if (model.dir == null || model.dir.isEmpty()) {
-            emptyFields.append("用例存放目录").append(",");
-        }
-        if (model.request[0] == null || model.request[0].isEmpty()) {
-            emptyFields.append("请求参数").append(",");
-        }
-
+        StringBuilder emptyFields = checkEmptyField(model);
         if (emptyFields.length() > 0) {
             emptyFields.setLength(emptyFields.length() - 1);
             emptyFields.append(" 不能为空");
@@ -90,6 +68,33 @@ public class GenCaseAction extends AnAction {
             LocalFileSystem.getInstance().refreshAndFindFileByPath(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR);
         }
         return true;
+    }
+
+    @NotNull
+    private static StringBuilder checkEmptyField(GenModel model) {
+        StringBuilder emptyFields = new StringBuilder();
+        if (model.region == null || model.region.isEmpty()) {
+            emptyFields.append("地区").append(",");
+        }
+        if (model.env == null || model.env.isEmpty()) {
+            emptyFields.append("环境").append(",");
+        }
+        if (model.type == null || model.type.isEmpty()) {
+            emptyFields.append("用例类型").append(",");
+        }
+        if (model.method == null || model.method.isEmpty()) {
+            emptyFields.append("方法路径").append(",");
+        }
+        if (model.suffix == null || model.suffix.isEmpty()) {
+            emptyFields.append("用例名后缀").append(",");
+        }
+        if (model.dir == null || model.dir.isEmpty()) {
+            emptyFields.append("用例存放目录").append(",");
+        }
+        if (model.request == null || model.request.length == 0 || model.request[0] == null || model.request[0].isEmpty()) {
+            emptyFields.append("请求参数").append(",");
+        }
+        return emptyFields;
     }
 
     @Override
