@@ -53,6 +53,12 @@
             <action id="cgt.ToggleCodeMonitorAction" class="com.spin.cgt.action.ToggleCodeMonitorAction"
                     text="启用代码变更监测"
                     description="预启动服务时，是否监测代码变更"/>
+            <action id="cgt.ToggleAutoCloseAction" class="com.spin.cgt.action.ToggleAutoCloseAction"
+                    text="自动关闭窗口"
+                    description="生成用例成功时，是否自动关闭窗口"/>
+            <action id="cgt.ToggleLongTimeoutAction" class="com.spin.cgt.action.ToggleLongTimeoutAction"
+                    text="加大超时时间"
+                    description="预启动服务时，生成用例/执行用例的超时时间，默认为5秒，勾选则为30秒"/>
         </group>
         <group id="CaseGenTool.RunCase" text="运行用例">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="after"
@@ -75,6 +81,12 @@
             <action id="cgt.ToggleCodeMonitorActionOnEditor" class="com.spin.cgt.action.ToggleCodeMonitorAction"
                     text="启用代码变更监测"
                     description="预启动服务时，是否监测代码变更"/>
+            <action id="cgt.ToggleAutoCloseActionOnEditor" class="com.spin.cgt.action.ToggleAutoCloseAction"
+                    text="自动关闭窗口"
+                    description="生成用例成功时，是否自动关闭窗口"/>
+            <action id="cgt.ToggleLongTimeoutActionOnEditor" class="com.spin.cgt.action.ToggleLongTimeoutAction"
+                    text="加大超时时间"
+                    description="预启动服务时，生成用例/执行用例的超时时间，默认为5秒，勾选则为30秒"/>
         </group>
     </actions>
 </idea-plugin>

@@ -3,6 +3,7 @@ package com.spin.cgt.action;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.spin.cgt.cmd.Cmd;
 import com.spin.cgt.cmd.CmdClient;
@@ -32,6 +33,7 @@ public class SecondGenCaseAction extends AnAction {
             CmdClient.Cmd(stringCmd, cmdResult);
             if (cmdResult.isSuccess()) {
                 Messages.showErrorDialog(cmdResult.getData(), "执行成功");
+                LocalFileSystem.getInstance().refreshAndFindFileByPath(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR);
             }
         } else {
             GotestRunTool.runGoTest(e, "TestCmd", stringCmd);

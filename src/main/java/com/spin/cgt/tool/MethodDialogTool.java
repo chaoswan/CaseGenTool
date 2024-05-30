@@ -6,6 +6,7 @@ import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.ui.components.JBTextField;
 import com.spin.cgt.cmd.model.GenModel;
+import com.spin.cgt.setting.CgtPluginSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -132,8 +133,7 @@ public class MethodDialogTool {
               genModel.request[idx] = requestTs.get(idx).getText();
             }
         );
-
-        if (callFunc.apply(genModel)) {
+        if (callFunc.apply(genModel) && CgtPluginSettings.autoClose()) {
           super.doOKAction();
         }
       }
