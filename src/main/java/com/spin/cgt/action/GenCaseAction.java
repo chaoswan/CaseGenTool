@@ -55,7 +55,7 @@ public class GenCaseAction extends AnAction {
                 String data = cmdResult.getData();
                 if (data.isEmpty()) {
                     Messages.showInfoMessage("生成成功", "生成成功");
-                    LocalFileSystem.getInstance().refreshAndFindFileByPath(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR+"/"+model.dir);
+                    FileTool.refreshFile(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR+"/"+model.dir);
                 } else {
                     Messages.showErrorDialog(data, "生成失败");
                     return false;
@@ -65,7 +65,7 @@ public class GenCaseAction extends AnAction {
             }
         } else {
             GotestRunTool.runGoTest(e, "TestCmd", genModelCmd);
-            LocalFileSystem.getInstance().refreshAndFindFileByPath(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR+"/"+model.dir);
+            FileTool.refreshFile(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR+"/"+model.dir);
         }
         return true;
     }

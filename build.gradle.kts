@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.spin"
-version = "1.1.1"
+version = "1.1.2"
 
 repositories {
     mavenCentral()
@@ -34,8 +34,8 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("221")
-        untilBuild.set("241.*")
+        sinceBuild.set("213")
+        untilBuild.set("242.*")
     }
 
     signPlugin {

@@ -33,7 +33,7 @@ public class ReGenCaseAction extends AnAction {
             CmdClient.Cmd(stringCmd, cmdResult);
             if (cmdResult.isSuccess()) {
                 Messages.showErrorDialog(cmdResult.getData(), "执行成功");
-                LocalFileSystem.getInstance().refreshAndFindFileByPath(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR);
+                FileTool.refreshFile(FileTool.getProject(e).getBasePath() + "/" + Constant.CASE_DIR);
             }
         } else {
             GotestRunTool.runGoTest(e, "TestCmd", stringCmd);

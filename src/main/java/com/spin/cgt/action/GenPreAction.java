@@ -36,7 +36,7 @@ public class GenPreAction extends AnAction {
         createPreFile(project, projectDir, pre);
         createEntryFile(project, projectDir, autoRoot);
 
-        LocalFileSystem.getInstance().refreshAndFindFileByPath(FileTool.getProject(e).getBasePath() + "/" + Constant.TEST_ROOT_DIR);
+        FileTool.refreshFile(FileTool.getProject(e).getBasePath() + "/" + Constant.TEST_ROOT_DIR);
     }
 
     private VirtualFile createDir(VirtualFile dir, String childPath) {
